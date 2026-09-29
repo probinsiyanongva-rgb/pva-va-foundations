@@ -1,0 +1,6 @@
+# Source Markdown (includes the Final Assessment answer key). Kept out of the
+# public repo; the maintainer keeps the approved copies.
+tools/source/
+__pycache__/
+.wrangler/
+node_modules/
