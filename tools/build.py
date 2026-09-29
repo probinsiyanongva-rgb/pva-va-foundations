@@ -679,7 +679,7 @@ def main():
 
     qc = parse_quick_checks(qc_purpose)
     (OUT / "shared" / "quick-checks.js").write_text(
-        "/* Quick Checks — approved draft (tools/source/VA_Foundations_Quick_Checks.md). Not pass/fail. */\n"
+        "/* Quick Checks — approved (tools/source/VA_Foundations_Quick_Checks.md). Not pass/fail. */\n"
         "window.VAF_QUICK_CHECKS = " + json.dumps(qc, ensure_ascii=False, indent=1) + ";\n", encoding="utf-8")
 
     qs = parse_assessment(assess_body)

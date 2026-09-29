@@ -1,4 +1,4 @@
-/* Quick Checks — approved draft (tools/source/VA_Foundations_Quick_Checks.md). Not pass/fail. */
+/* Quick Checks — approved (tools/source/VA_Foundations_Quick_Checks.md). Not pass/fail. */
 window.VAF_QUICK_CHECKS = {
  "lesson-1": {
   "purpose": "Check your understanding of what a VA is and how VA work can differ.",
@@ -441,12 +441,12 @@ window.VAF_QUICK_CHECKS = {
     "q": "You still have no idea which type of VA work suits you. What does the lesson say?",
     "options": [
      "You must choose a specialization today",
-     "That's fine; later stages of the PVA journey let you explore before committing",
+     "You can continue exploring the different types of VA work before choosing a direction.",
      "You should stop the course",
      "Pick the first one on the list"
     ],
     "answer": 1,
-    "explain": "At this point, your job is simply to understand the landscape."
+    "explain": "At this point, your job is simply to understand the landscape. You can explore your options further as you move through the PVA journey."
    }
   ]
  },
