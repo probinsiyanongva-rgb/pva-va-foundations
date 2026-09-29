@@ -2,7 +2,10 @@
 """Build the VA Foundations standalone module from the approved Markdown.
 
 Source of truth: tools/source/PVA_VA_Foundations_Revised_Course.md
-Quick Checks:    tools/source/VA_Foundations_Quick_Checks.md (approved draft)
+Quick Checks:    tools/source/VA_Foundations_Quick_Checks.md (approved 29 Sep 2026)
+
+tools/source/ is private (not in the public repo): the course Markdown contains
+the Final Assessment answer key.
 
 Output: public/  (the only folder Cloudflare serves; see wrangler.jsonc)
 
@@ -652,7 +655,21 @@ def build_progress_page():
 
 
 # ---------------------------------------------------------------- main
+def require_private_sources():
+    missing = [f for f in (SRC, QC_SRC) if not f.exists()]
+    if missing:
+        names = "\n  ".join(str(f.relative_to(ROOT)) for f in missing)
+        raise SystemExit(
+            "Cannot build: the private course source files are missing.\n  " + names + "\n\n"
+            "tools/source/ is intentionally excluded from the public repository because the\n"
+            "course Markdown contains the Final Assessment answer key. Copy the approved\n"
+            "source files into tools/source/ locally, then run this script again.\n"
+            "The live site in public/ is already built; you only need these files to rebuild it.\n"
+            "The browser QA suite (tools/qa.py) does not need them.")
+
+
 def main():
+    require_private_sources()
     src = SRC.read_text(encoding="utf-8")
     top = split_top(src)
     lessons, purpose, assess_body, journey = [], "", "", None

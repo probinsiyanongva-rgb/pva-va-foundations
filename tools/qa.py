@@ -4,8 +4,37 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 B = "http://127.0.0.1:8765/"
-SRC = Path(__file__).parent / "source" / "PVA_VA_Foundations_Revised_Course.md"
-ANS = {int(n): "ABCD".index(a) for n, a in re.findall(r"^\|\s*(\d+)\s*\|\s*([A-D])\s*\|", SRC.read_text(), flags=re.M)}
+PUBLIC = Path(__file__).resolve().parent.parent / "public"
+
+
+def fnv(s):
+    h = 2166136261
+    for ch in s.encode("utf-8"):
+        h ^= ch
+        h = (h * 16777619) & 0xFFFFFFFF
+    return format(h, "08x")
+
+
+def load_answer_key():
+    """Work out the correct options from the published hashes, so this suite
+    runs from a clean clone without the private course Markdown."""
+    data = PUBLIC / "shared" / "assessment-data.js"
+    if not data.exists():
+        sys.exit(f"QA needs the built site: {data} is missing. Run tools/build.py first "
+                 "(requires the private files in tools/source/).")
+    js = data.read_text(encoding="utf-8")
+    qs = json.loads(js.split("window.VAF_ASSESSMENT = ", 1)[1].split(";\nwindow.VAF_SALT", 1)[0])
+    salt = json.loads(js.split("window.VAF_SALT = ", 1)[1].rstrip().rstrip(";"))
+    key = {}
+    for q in qs:
+        hits = [i for i in range(len(q["options"])) if fnv(f'{salt}|{q["n"]}|{i}') == q["k"]]
+        if len(hits) != 1:
+            sys.exit(f"Answer hash for question {q['n']} matches {len(hits)} options; expected exactly 1.")
+        key[q["n"]] = hits[0]
+    return key
+
+
+ANS = load_answer_key()
 results, errors = [], []
 
 def check(name, cond, detail=""):
