@@ -29,7 +29,7 @@ VERSION = "1.0"
 
 # Courses the lessons mention by name -> where they live today.
 COURSE_LINKS = {
-    "Computer & Laptop Basics": "https://probinsiyanongva.org/computer-basics/",
+    "Computer & Laptop Basics": "https://pva-computer-basics.probinsiyanongva.workers.dev/",
     "Internet, Email & Google Workspace": "https://probinsiyanongva.org/internet-workspace-basics/",
     "Document Basics": "https://pva-document-basics.probinsiyanongva.workers.dev/",
     "Spreadsheet Basics": "https://pva-spreadsheet-basics.probinsiyanongva.workers.dev/",
